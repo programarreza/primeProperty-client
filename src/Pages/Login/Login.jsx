@@ -1,16 +1,12 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
-import { imageUpload } from "../../Utils/Utils";
-import useAxiosLocal from "../../hooks/useAxiosLocal";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import useAxiosLocal from "../../hooks/useAxiosLocal";
 
-const Register = () => {
+const Login = () => {
   const axiosLocal = useAxiosLocal();
-  const [number, setNumber] = useState("US");
-  console.log(number.value);
+
   const {
     register,
     reset,
@@ -20,30 +16,24 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const image = data.image[0];
-    console.log(image);
-
-    const imageData = await imageUpload(image);
-    console.log(imageData);
 
     // create user entry in the database
     const userInfo = {
-      fullName: data.name,
       email: data.email,
       password: data.password,
-      role: data.role,
-      number: number.value,
-      image: imageData?.data?.display_url,
     };
     console.log(userInfo);
 
-    axiosLocal.post("/api/register", userInfo).then((res) => {
+    axiosLocal.post("/api/login", userInfo).then((res) => {
       if (res.status === 200) {
-        toast.success("Registration Successful");
+        toast.success("Login Successful");
         reset();
         //   navigate("/");
       }
-    });
+      
+    }).catch(() => {
+		toast.error("email or password incorrect");
+	})
   };
 
   return (
@@ -56,19 +46,7 @@ const Register = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="card-body w-[450px] px-16"
               >
-                <h2 className="text-center text-3xl font-bold mt-5">Sign Up</h2>
-                <div className="form-control">
-                  <label className="label"></label>
-                  <input
-                    type="text"
-                    {...register("name", { required: true })}
-                    placeholder="Full Name"
-                    className="input input-bordered h-10 mr-5"
-                  />
-                  {errors.name && (
-                    <span className="text-[#006ce1]">Name is required</span>
-                  )}
-                </div>
+                <h2 className="text-center text-3xl font-bold mt-5">Login</h2>
 
                 <div className="form-control">
                   <label className="label"></label>
@@ -90,9 +68,6 @@ const Register = () => {
                       required: true,
                       minLength: 6,
                       maxLength: 20,
-                      // TODO: uncomment this validation
-                      // pattern:
-                      //   /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8}/,
                     })}
                     placeholder="Password"
                     className="input input-bordered h-10 mb-2 mr-5"
@@ -119,54 +94,18 @@ const Register = () => {
                   )}
                 </div>
 
-                <div className=" ">
-                  <PhoneInput
-                    country={"bd"}
-                    //   value={number}
-                    onChange={(value) => setNumber({ value })}
-                  />
-                </div>
-
-                <div className="form-control">
-                  <label className="label"></label>
-
-                  <select
-                    className="border py-2 rounded-md mr-5"
-                    {...register("role", { required: true })}
-                  >
-                    <option disabled selected required>
-                      Select Role
-                    </option>
-                    <option value="owner">House Owner</option>
-                    <option value="renter">House Renter</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="image" className="block mb-2 text-sm">
-                    Upload Profile Image:
-                  </label>
-                  <input
-                    {...register("image", { required: true })}
-                    required
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                  />
-                </div>
-
                 <div className="form-control mt-2">
                   <button
                     type="submit"
                     className="btn   bg-[#61adff] hover:bg-[#006ce1] text-white  "
                   >
-                    Sign Up
+                    Login In
                   </button>
                   <p className=" text-center mt-2">
-                    Already registered?{" "}
-                    <Link to={"/login"}>
+                    Are you new user?{" "}
+                    <Link to={"/register"}>
                       <span className="font-semibold text-[#006ce1]">
-                        login Now
+                        Register Now
                       </span>
                     </Link>
                   </p>
@@ -180,4 +119,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

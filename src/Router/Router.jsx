@@ -3,6 +3,7 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home";
 import Register from "../Pages/Register/Register";
 import Login from "../Pages/Login/Login";
+import OwnerDashboard from "../Pages/OwnerDashboard/OwnerDashboard";
 
 const router = createBrowserRouter([
   {
@@ -15,12 +16,16 @@ const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <Register/>
+        element: <Register />,
       },
       {
         path: "login",
-        element: <Login/>
-      }
+        element: <Login />,
+      },
+      {
+        path: "owner_dashboard",
+        element: <OwnerDashboard />,
+      },
     ],
   },
 ]);

@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import useAxiosLocal from "../../hooks/useAxiosLocal";
 import toast from "react-hot-toast";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import { imageUpload } from "../../Utils/Utils";
+import useAxiosLocal from "../../hooks/useAxiosLocal";
 
 const OwnerDashboard = () => {
   const axiosLocal = useAxiosLocal();
+
+
 
   const {
     register,
@@ -235,6 +237,8 @@ const OwnerDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* all houses */}
     </div>
   );
 };

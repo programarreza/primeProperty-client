@@ -7,13 +7,13 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-lg">
+      <div className="navbar bg-base-100 shadow-lg bg-transparent">
         <div className="navbar-start">
          
           <Link to="/" className=" text-xl">
             <img
               className="w-20"
-              src="https://i.postimg.cc/RFRx86f7/Layer-601321.png"
+              src="https://i.postimg.cc/wMtxS9ns/prime-property.png"
               alt=""
             />
           </Link>

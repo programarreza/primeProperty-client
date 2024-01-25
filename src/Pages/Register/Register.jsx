@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { imageUpload } from "../../Utils/Utils";
 import useAxiosLocal from "../../hooks/useAxiosLocal";
 import PhoneInput from "react-phone-input-2";
@@ -10,7 +10,8 @@ import { useState } from "react";
 const Register = () => {
   const axiosLocal = useAxiosLocal();
   const [number, setNumber] = useState("US");
-  console.log(number.value);
+const navigate = useNavigate()
+
   const {
     register,
     reset,
@@ -21,10 +22,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     console.log(data);
     const image = data.image[0];
-    console.log(image);
-
     const imageData = await imageUpload(image);
-    console.log(imageData);
 
     // create user entry in the database
     const userInfo = {
@@ -41,7 +39,7 @@ const Register = () => {
       if (res.status === 200) {
         toast.success("Registration Successful");
         reset();
-        //   navigate("/");
+          navigate("/login");
       }
     });
   };

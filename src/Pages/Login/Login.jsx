@@ -1,15 +1,16 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import "react-phone-input-2/lib/style.css";
-import { Link } from "react-router-dom";
-import useAxiosLocal from "../../hooks/useAxiosLocal";
+import { Link, useNavigate } from "react-router-dom";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const Login = () => {
-  const axiosLocal = useAxiosLocal();
+  const {user} = useUserInfo()
+  const navigate = useNavigate()
 
   const {
     register,
-    reset,
+    // reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -22,18 +23,27 @@ const Login = () => {
       email: data.email,
       password: data.password,
     };
-    console.log(userInfo);
-
-    axiosLocal.post("/api/login", userInfo).then((res) => {
-      if (res.status === 200) {
-        toast.success("Login Successful");
-        reset();
-        //   navigate("/");
+    const res = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    });
+    if (res.status === 400) {
+      toast.error("Invalid credentials");
+    } else {
+      toast.success("Login Successfully ")
+      const resData = await res.json();
+      if (resData?.token) {
+        localStorage.setItem("user:token", resData?.token);
+        localStorage.setItem("user:details", JSON.stringify(resData?.user));
+        if(user.role === "owner"){
+          navigate("/owner_dashboard")
+        }
       }
-      
-    }).catch(() => {
-		toast.error("email or password incorrect");
-	})
+
+    }
   };
 
   return (

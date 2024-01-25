@@ -14,6 +14,14 @@ const NavbarLinks = () => {
         Home
       </NavLink>
       <NavLink
+        to="/owner_dashboard"
+        className={({ isActive, isPending }) =>
+          isPending ? "pending" : isActive ? "text-[#D1A054] underline" : ""
+        }
+      >
+        Owner Dashboard 
+      </NavLink>
+      <NavLink
         to="/register"
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? "text-[#D1A054] underline" : ""

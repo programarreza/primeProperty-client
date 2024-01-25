@@ -3,11 +3,12 @@ import toast from "react-hot-toast";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { imageUpload } from "../../Utils/Utils";
 import useAxiosLocal from "../../hooks/useAxiosLocal";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const OwnerDashboard = () => {
   const axiosLocal = useAxiosLocal();
-
-
+  const {user} = useUserInfo()
+  console.log({user});
 
   const {
     register,
@@ -43,6 +44,7 @@ const OwnerDashboard = () => {
         if (res.status === 200) {
           toast.success("Room Added Successful");
           reset();
+          console.log(res.data);
           //   navigate("/");
         }
       })

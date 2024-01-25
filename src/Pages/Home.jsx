@@ -17,20 +17,20 @@ const Home = () => {
     <div>
       <Banner />
 
-      <div className="grid grid-cols-3 gap-8 p-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-12">
         {houses.map((house) => (
           <>
             <div className="card card-compact  bg-base-100 shadow-xl">
               <figure>
-                <img src={house?.image} alt="Shoes" />
+                <img className="h-[300px] w-full " src={house?.image} alt="Shoes" />
               </figure>
               <div className="card-body">
                 <h2 className="card-title">{house?.houseName}</h2>
                 <p>{house.address}</p>
                 <div className="card-actions justify-end">
-                  <p>Room Size: {house?.room_size}</p>
+                  <p>Room Size: {house?.room_size}Sq</p>
                   <p>Bedroom: {house?.bedroom}</p>
-                  <p>Rent Per Month: {house?.rent}</p>
+                  <p>Rent Per Month: {house?.rent}৳</p>
                 </div>
               </div>
             </div>
